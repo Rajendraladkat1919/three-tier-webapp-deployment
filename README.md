@@ -39,7 +39,9 @@ To solve above problem statement we are taking below approach.
 
 ` Implementation details `
 
+1. Current Tech Stack
 
+2. Deployment Diagram
 
 
 ** Best practices to productionze this application **
