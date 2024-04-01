@@ -59,7 +59,7 @@ To solve above problem statement we are taking below approach. We are provising 
 Please note that this is just simple demo appplication and it does not follow all the standard and best practicies.
 
 
-    # Few Assumptions:
+# Few Assumptions:
 
     - While deploying the code we can either use terraform from local machine or Jenkins job to create and deploy the application.
     - All the secrets and certificate requires for application & infrastructure need to be created upfront.
@@ -71,7 +71,8 @@ Please note that this is just simple demo appplication and it does not follow al
     - There will be diffrent repo for application code and infratructure code.
     - Git branching and deployment stratergy decided upfront.
     - Currently role uses admin permisison to create eks cluster which need to be assign with Least Privilege.
-    # Application Deployment Workflow CI/CD in real time.
+    
+# Application Deployment Workflow CI/CD in real time.
 
     1. Developer push the code into application repository.
     2. Once code is pushed into repository automated pipleine will be trigger to create the docker images from this code.
@@ -82,15 +83,13 @@ Please note that this is just simple demo appplication and it does not follow al
     7. Observe the application using Grafana dashboard.
     8. Logs will be colleted inside Cloudwatch.
 
-    # Deploying steps:
+# Deployment steps:
 
     1. infrastructure provisioning:
 
         Go to the infratructure folder. Each folder you need to run terraform command.
         
         `terraform apply auto-approve`. The workflow to run this terraform command is as below.
-
-
 
         1. aws-backend-state : Provide the backend bucket name inside main.tf file and run the terraform code using terraform apply. Pleasem make sure backend bucket created in advance before running this code.
 
@@ -100,7 +99,7 @@ Please note that this is just simple demo appplication and it does not follow al
 
         4. monitoring - this folder setup the prometheus and grafana.
 
-    Deployment using local machine or from the aws cloud instance or aws cloud9.
+    # Deployment using local machine or from the aws cloud instance or aws cloud9.
     
     - Prerequisite
     
@@ -196,15 +195,35 @@ Please note that this is just simple demo appplication and it does not follow al
 
         kubectl apply -f full_stack_lb.yaml
 
-
-
-
-
-
 ## Best practices to productionze this application
 
 1. IAC and Source code management
+    - central secret manager
+    - module wise remote state managment.
+    - auotomated infra creation pipeline.
+    - Application configuration management.
+    - Git branching stratergy.
+    - infrastrcture code contains below tools while developing infrastrcture code.
+        
+        checkov (deprecated) and terraform_checkov
+        infracost_breakdown
+        terraform_docs
+        terraform_docs_replace (deprecated)
+        terraform_fmt
+        terraform_providers_lock
+        terraform_tflint
+        terraform_tfsec (deprecated)
+        terraform_trivy
+        terraform_validate
+        terraform_wrapper_module_for_each
+        terrascan
+        tfupdate
+    All the above tools are part of pre-commit hooks or part of stages when we develp code.
+
 2. Build Process
+    - we can use the Left shift security approach to build indrastrcture and docker images.
+    - We create vulnerabilities scan pipeline for docker images.
+    
 3. Deployment Process
 4. Observability
 5. monitoring, logging,alerting for infrastructure and application.
