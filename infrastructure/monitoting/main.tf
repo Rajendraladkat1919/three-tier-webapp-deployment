@@ -1,3 +1,8 @@
+module "eks" {
+  source = "../eks-essentials"
+  
+}
+
 resource "time_sleep" "wait_for_kubernetes" {
 
     depends_on = [

@@ -70,7 +70,7 @@ Please note that this is just simple demo appplication and it does not follow al
     - All the access between Jenkins, EKS, Git sorted upfront.
     - There will be diffrent repo for application code and infratructure code.
     - Git branching and deployment stratergy decided upfront.
- 
+    - Currently role uses admin permisison to create eks cluster which need to be assign with Least Privilege.
     # Application Deployment Workflow CI/CD in real time.
 
     1. Developer push the code into application repository.
@@ -83,6 +83,22 @@ Please note that this is just simple demo appplication and it does not follow al
     8. Logs will be colleted inside Cloudwatch.
 
     # Deploying steps:
+
+    1. infrastructure provisioning:
+
+        Go to the infratructure folder. Each folder you need to run terraform command.
+        
+        `terraform apply auto-approve`. The workflow to run this terraform command is as below.
+
+
+
+        1. aws-backend-state : Provide the backend bucket name inside main.tf file and run the terraform code using terraform apply. Pleasem make sure backend bucket created in advance before running this code.
+
+        2. aws-networking : VPC module used to create network for EKS cluster.
+
+        3. eks-essentials: create the EKS cluster with autoscaling functionality.
+
+        4. monitoring - this folder setup the prometheus and grafana.
 
     Deployment using local machine or from the aws cloud instance or aws cloud9.
     
@@ -103,21 +119,21 @@ Please note that this is just simple demo appplication and it does not follow al
 
         ```
         export DOCKER_CLI_EXPERIMENTAL=enabled
-        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w8u5e4v2
+        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/xxxxxxxx
         ```
         Buid Front End :
         
         '''
         docker buildx build --platform linux/amd64 -t workshop-frontend:v1 . 
-        docker tag workshop-frontend:v1 public.ecr.aws/w8u5e4v2/workshop-frontend:v1
-        docker push public.ecr.aws/w8u5e4v2/workshop-frontend:v1
+        docker tag workshop-frontend:v1 public.ecr.aws/xxxxxxxx/workshop-frontend:v1
+        docker push public.ecr.aws/xxxxxxxx/workshop-frontend:v1
         '''
         Buid Back End :
         
         '''
         docker buildx build --platform linux/amd64 -t workshop-backend:v1 . 
-        docker tag workshop-backend:v1 public.ecr.aws/w8u5e4v2/workshop-backend:v1
-        docker push public.ecr.aws/w8u5e4v2/workshop-backend:v1
+        docker tag workshop-backend:v1 public.ecr.aws/xxxxxxxx/workshop-backend:v1
+        docker push public.ecr.aws/xxxxxxxx/workshop-backend:v1
 
         # For Linux/Windows:
 
@@ -125,24 +141,61 @@ Please note that this is just simple demo appplication and it does not follow al
 
         ```
         docker build -t workshop-frontend:v1 . 
-        docker tag workshop-frontend:v1 public.ecr.aws/w8u5e4v2/workshop-frontend:v1
-        docker push public.ecr.aws/w8u5e4v2/workshop-frontend:v1
+        docker tag workshop-frontend:v1 public.ecr.aws/xxxxxxxx/workshop-frontend:v1
+        docker push public.ecr.aws/xxxxxxxx/workshop-frontend:v1
         ```
         b. Buid Back End :
 
         ```
         docker build -t workshop-backend:v1 . 
-        docker tag workshop-backend:v1 public.ecr.aws/w8u5e4v2/workshop-backend:v1
-        docker push public.ecr.aws/w8u5e4v2/workshop-backend:v1
+        docker tag workshop-backend:v1 public.ecr.aws/xxxxxxxx/workshop-backend:v1
+        docker push public.ecr.aws/xxxxxxxx/workshop-backend:v1
         ```
 
-    # Update Kubeconfig Syntax: 
+    - Update Kubeconfig Syntax: 
     
-    ```
-    aws eks update-kubeconfig --region region-code --name your-cluster-name
+        ```
+        aws eks update-kubeconfig --region region-code --name your-cluster-name
     
-    ```
-    
+        ```
+    - Create Namespace before deploying to EKS
+
+        '''
+        kubectl create ns webapp-demo
+        kubectl config set-context --current --namespace webapp-demo
+
+        '''
+
+    - MongoDB Database Setup
+
+        To create MongoDB Resources
+        '''
+        cd k8s_manifests/mongo_v1
+        - kubectl apply -f secrets.yaml
+        - kubectl apply -f deploy.yaml
+        - kubectl apply -f service.yaml
+        '''
+        
+        Backend API Setup
+
+        Create NodeJs API deployment by running the following command:
+
+        '''
+        - kubectl apply -f backend-deployment.yaml
+        - kubectl apply -f backend-service.yaml
+        '''
+        
+        Frontend setup
+
+        To create the frontend  resource inside terminal run the following command:
+        '''
+        - kubectl apply -f frontend-deployment.yaml
+        - kubectl apply -f frontend-service.yaml
+        '''
+        Finally create the final load balancer to allow internet traffic:
+
+        kubectl apply -f full_stack_lb.yaml
+
 
 
 
