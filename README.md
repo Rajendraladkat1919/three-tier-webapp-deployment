@@ -1,21 +1,19 @@
 # Deploy three tier web application using terraform
 
-`What it is ?`
-
-- This project contains DevOps tools and technologies which helps to deploy the end-to-end web application on EKS cluster.
-
+This project contains DevOps tools and technologies which helps to deploy the end-to-end web application on EKS cluster.
 
 ## A. Problem statement:
+
+`What it is ?`
 
 As a DevOps engineer I want do below things:
 
  1. Containerze the webapplication.
  2. Deploy the web application on container platform.
 
+## B. Few approaches:
 
 `Something we can think of`
-
-## B. Few approaches:
 
 We can deploy the web application using multiple approaches. Its totally depend's on what type of web application it is and whats the actual requirements?. Below are the few solution we can think of while deploying it to cloud platform.
 
@@ -28,8 +26,7 @@ We can deploy the web application using multiple approaches. Its totally depend'
 
 ## C. Our Current approach:
 
-To solve above problem statement we are taking below approach. 
-We provising the EKS cluster with node group using eks module and deploying the wep application using helm manifest.
+To solve above problem statement we are taking below approach. We are provising the EKS cluster with node group using eks module and deploying the wep application using helm manifest.
 
 1. Infrastrcture related approach
 
@@ -73,4 +70,4 @@ We provising the EKS cluster with node group using eks module and deploying the 
 9. Testing of infrastructure and application
 10. Cost of overall operation.
 
-## Future RoadMap 
+## Future Roadmap 
