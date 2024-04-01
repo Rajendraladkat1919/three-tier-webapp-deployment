@@ -54,6 +54,8 @@ Implementation details:
 
 2. Deployment Diagram
 
+    ![Alt text](Amazon-Elastic-Kubernetes-Service-EKS-Explained-Diagram-5.png)
+    
 3. Steps to Deploy application
 
 
