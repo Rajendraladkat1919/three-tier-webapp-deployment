@@ -1,10 +1,11 @@
-Deploy three tier web application using terraform
+# Deploy three tier web application using terraform
 
 `What it is ?`
 
 - This project contains DevOps tools and technologies which helps to deploy the end-to-end web application on EKS cluster.
 
-Problem statement:
+
+## A. Problem statement:
 
 As a DevOps engineer I want do below things:
 
@@ -14,7 +15,7 @@ As a DevOps engineer I want do below things:
 
 `Something we can think of`
 
-Few approaches:
+## B. Few approaches:
 
 We can deploy the web application using multiple approaches. Its totally depend's on what type of web application it is and whats the actual requirements?. Below are the few solution we can think of while deploying it to cloud platform.
 
@@ -25,7 +26,7 @@ We can deploy the web application using multiple approaches. Its totally depend'
 5. S3 buckets
 6. Web hosted solution provider by cloud vendor.
 
-Our Current approach:
+## C. Our Current approach:
 
 To solve above problem statement we are taking below approach. 
 We provising the EKS cluster with node group using eks module and deploying the wep application using helm manifest.
@@ -39,7 +40,7 @@ We provising the EKS cluster with node group using eks module and deploying the 
     We are using existing application code which need to be dockerize.
 
 
-Implementation details:
+## D. Implementation details:
 
 
 1. Current Tech Stack
@@ -55,25 +56,21 @@ Implementation details:
 2. Deployment Diagram
 
     ![Alt text](Amazon-Elastic-Kubernetes-Service-EKS-Explained-Diagram-5.png)
-    
+
 3. Steps to Deploy application
 
 
-** Best practices to productionze this application **
+## Best practices to productionze this application
 
-IAC and Source code management
-Build Process
-Deployment Process
-Observability
-monitoring, logging,alerting for infrastructure and application.
-Operational Excellence
-Security of infratsructure and application
-Platform scalaibility and HA
-Testing of infrastructure and application
-Cost of overall operation.
+1. IAC and Source code management
+2. Build Process
+3. Deployment Process
+4. Observability
+5. monitoring, logging,alerting for infrastructure and application.
+6. Operational Excellence
+7. Security of infratsructure and application
+8. Platform scalaibility and HA
+9. Testing of infrastructure and application
+10. Cost of overall operation.
 
-
-
-
-
-** Future RoadMap **
+## Future RoadMap 
