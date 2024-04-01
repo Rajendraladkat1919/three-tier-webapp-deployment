@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+    stages {
+        stage('Download Helm Charts') {
+            steps {
+                sh "echo 'Downloading Helm Charts from Bitbucket repository...'"
+                git(url: 'http://192.168.1.30:7990/scm/jen/helm.git', branch: 'master')
+                
+            }
+        }
+        stage('Test Kubernetes version') {
+            steps {
+                sh "echo 'Checking Kubernetes version..'"
+                sh'''
+                  kubectl version -o json // After getting the verson do whatever validations. 
+                '''
+            }
+        }
+        stage('Push Helm Charts to Kubernetes') {
+            steps {
+                sh "echo 'building..'"
+                sh """
+                  cd your-helm-directory
+                  helm install .............. Or whatever command you need
+                """
+            }
+        }     
+        stage('Build Image') {
+            steps {
+                sh "echo 'building..'"
+                git checkout http://192.168.1.30:7990/scm/jen/spring-boot-microservice.git
+                // execute Java -jar ... and build docker image
+                sh'''
+                 git clone http://192.168.1.30:7990/scm/jen/spring-boot-microservice.git
+                  cd TO_JAR_LOCATION 
+                  Java -jar some.jsr
+                  #Assuming you have a docker file defined
+                  docker build -t nexusurl/Imagename:5.0 .
+                '''
+            }
+        }
+        stage('Push Image into Nexus registry') {
+            steps {
+                sh "echo 'building..'"
+                sh'''
+                  docker push nexusurl/Imagename:1.0
+                '''
+                // push compiled docker image into Nexus repository
+            }
+        }
+        stage('Deploy Image from Nexus registry into Kubernetes') {
+            steps {
+                sh "echo 'building..'"
+                # This again depends on how you plan to update. Assuming you are using the same helm charts then you can override what ever imagetag in your values file and run. Or else update the values file and then run. 
+                sh'''
+                    helm install --set image.tag=5.0
+                '''
+            }
+        }
+        stage('Test'){
+            steps {
+                sh "echo 'Testing...'"
+                // This depends on how you have written your tests. 
+            }
+        }
+    }
+}

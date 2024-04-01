@@ -1,0 +1,83 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', credentialsId: '<CREDS>', url: 'https://github.com/sumeetninawe/tf-tuts'
+            }
+        }
+        stage('validate') {
+            parallel {
+                stage('tf fmt') {
+                    steps {
+                        tfFmt()
+                    }
+                }
+                stage('tf docs') {
+                    steps {
+                        tfDocs(workDir: "${env.TF_WORKDIR}")
+                    }
+                }
+                stage('tf lint'){
+                    steps {
+                        tfLint(workDir: "${env.TF_WORKDIR}")
+                    }
+                }
+                stage('tf sec') {
+                    steps {
+                        tfSec()
+                    }
+                }
+                stage('tf validate'){
+                    steps {
+                        tfValidate(workDir:"${env.TF_WORKDIR}")
+                    }
+                }
+
+                stage('tf witch'){
+                steps{
+
+                }
+                }
+
+                stage('tf plan apply'){
+                steps{
+
+                }
+                }
+
+                stage('tf approval apply'){
+                steps{
+
+                }
+                }
+
+                stage('tf apply'){
+                steps{
+
+                }
+                }
+
+                stage('tf plan destroy'){
+                steps{
+
+                }
+                }
+
+                stage('tf approval destroy'){
+                steps{
+
+                }
+                }
+
+                stage('tf destroy'){
+                steps{
+
+                }
+                }
+
+            }
+           
+    }
+}

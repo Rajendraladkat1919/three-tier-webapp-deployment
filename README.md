@@ -1,8 +1,8 @@
-Deploy theree tier web application using terraform
+Deploy three tier web application using terraform
 
 `What it is ?`
 
-- This project contains DevOps tools and technologies which helps to deploy the end-to-end webapplication.
+- This project contains DevOps tools and technologies which helps to deploy the end-to-end web application on EKS cluster.
 
 Problem statement:
 
@@ -59,6 +59,16 @@ Implementation details:
 
 ** Best practices to productionze this application **
 
+IAC and Source code management
+Build Process
+Deployment Process
+Observability
+monitoring, logging,alerting for infrastructure and application.
+Operational Excellence
+Security of infratsructure and application
+Platform scalaibility and HA
+Testing of infrastructure and application
+Cost of overall operation.
 
 
 
