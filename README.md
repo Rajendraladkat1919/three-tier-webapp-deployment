@@ -100,8 +100,16 @@ Please note that this is just simple demo appplication and it does not follow al
         4. monitoring - this folder setup the prometheus and grafana.
 
     # Deployment using local machine or from the aws cloud instance or aws cloud9.
+
+    Please note that we are creating one role with admin access to run below projects. This role has admin permisison for now in real production least privillges principle used to create role and run this projects.
+    Also user who run this or assuming above role should have necessary permission in real world.
+    For demo purpose we just created one user/role with admin access and exposrting its key locally on command line to run this terraform code. 
     
     - Prerequisite
+
+        Please make sure we have export your key locally before running this terraform code. Below page help to understand how authenticate terraform with provider.
+
+        [! https://registry.terraform.io/providers/hashicorp/aws/latest/docs?product_intent=terraform#environment-variables]
     
         1. Install Kubectl https://kubernetes.io/docs/tasks/tools/
 
@@ -221,16 +229,72 @@ Please note that this is just simple demo appplication and it does not follow al
     All the above tools are part of pre-commit hooks or part of stages when we develp code.
 
 2. Build Process
+   
     - we can use the Left shift security approach to build indrastrcture and docker images.
-    - We create vulnerabilities scan pipeline for docker images.
+    - We create vulnerabilities scan pipeline for docker images , libraries or any packages download from the internet.
+    - Dashboard for  Jenkins build jobs to provide overall overview of build server. 
     
 3. Deployment Process
-4. Observability
-5. monitoring, logging,alerting for infrastructure and application.
-6. Operational Excellence
-7. Security of infratsructure and application
-8. Platform scalaibility and HA
-9. Testing of infrastructure and application
-10. Cost of overall operation.
 
-## Future Roadmap 
+    - Identical build & deploy process across all env.
+    - Auotomated application versioning and conventional commits.
+    - Left shift security approach to all pipelines.
+    - Deployment stratergies along with rollback feature should be in place.
+
+4. Observability
+   
+   This includes monitoring, logging,alerting for infrastructure and application.
+    - Better application and infratsrcture logs management.
+    - Grafana dashboard for application and infrastructure managements.
+    - Log encryption and log retention mechanism.
+    - All the key Matrics, Logs & Traces are captured properly.
+
+5. Operational Excellence 
+    
+    This includes DR,IR,RTO,RPO and overall production run cost.
+
+6. Security of infratsructure and application
+
+    This includes 
+    - developing secure code
+    - autherization and authentication of infratsrcture
+    - create vulnerabilities, CVE free artifacts
+    - encryption of data
+    - securing E2E request
+    - certificate management
+    - secret management
+    - hardning of compute resources etc.
+
+7. Platform scalaibility and HA :
+
+    - To achive seamless scalability & High availability architecture should be design in such way that it shoule be scalable and available as per the SLO/SLA.
+
+8. Testing of infrastructure and application:
+
+    following test should be in place for application and infratsrcture.
+
+    - System Testing
+    - Functional Testing
+    - Acceptance Testing
+    - Smoke Testing
+    - Regression Testing
+    - Performance Testing
+    - Load Testing
+
+9. Cost of overall operation:
+
+    Security & cost are the most important factor while running any business these days. In order to control the operational cost it will good to have cost optimization stratergy in place to achive better result.
+    From day 0 we should have security in place.
+
+## Future Roadmap
+
+Software architecture is trade-off. This architecture or system design for software evolve day by day. Its continious process. In the current simple demo application we can think of few ideas.
+
+- create infrastrcture as seprate module.
+    1. Project should first contain networking layer module
+    2. we have all role and its permission module for application & infra layer module
+    3. Restricted permission assign to above netowrking module where least privelliges and strict permission given to each role and users.
+    4. All secrets should be consumed through AWS secret manager or central secret manager like hashicorp
+    5. All certifacte should be managed using ACM
+    6. Jenkins will be used with Left Shift aprroach to build docker and helm as artifacts.
+    7. Automated Jenkis pipeline will be in place to provision infratsructure and deploy the application code.
