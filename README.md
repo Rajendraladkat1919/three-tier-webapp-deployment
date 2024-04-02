@@ -85,6 +85,25 @@ Please note that this is just simple demo appplication and it does not follow al
 
 # Deployment steps:
 
+    Please note that we are creating one role with admin access to run below projects. This role has admin permisison for now in real production least privillges principle used to create role and run this projects.
+    Also user who run this or assuming above role should have necessary permission in real world.
+    For demo purpose we just created one user/role with admin access and exposrting its key locally on command line to run this terraform code.
+
+     - Prerequisite
+
+        Please make sure we have export your key locally before running this terraform code. Below page helps to understand how authenticate terraform with aws provider.
+
+        [! https://registry.terraform.io/providers/hashicorp/aws/latest/docs?product_intent=terraform#environment-variables]
+    
+        1. Install Kubectl https://kubernetes.io/docs/tasks/tools/
+
+        2. Install Helm https://helm.sh/docs/intro/install/
+
+        3. Install aws-cli https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+        4. create service role to perform the deployment.
+
+
     1. infrastructure provisioning:
 
         Go to the infratructure folder. Each folder you need to run terraform command.
@@ -99,25 +118,11 @@ Please note that this is just simple demo appplication and it does not follow al
 
         4. monitoring - this folder setup the prometheus and grafana.
 
-    # Deployment using local machine or from the aws cloud instance or aws cloud9.
-
-    Please note that we are creating one role with admin access to run below projects. This role has admin permisison for now in real production least privillges principle used to create role and run this projects.
-    Also user who run this or assuming above role should have necessary permission in real world.
-    For demo purpose we just created one user/role with admin access and exposrting its key locally on command line to run this terraform code. 
     
-    - Prerequisite
-
-        Please make sure we have export your key locally before running this terraform code. Below page help to understand how authenticate terraform with provider.
-
-        [! https://registry.terraform.io/providers/hashicorp/aws/latest/docs?product_intent=terraform#environment-variables]
     
-        1. Install Kubectl https://kubernetes.io/docs/tasks/tools/
-
-        2. Install Helm https://helm.sh/docs/intro/install/
-
-        3. Install aws-cli https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-
-        4. create service role to perform the deployment.
+    2.  Deployment using local machine or from the aws cloud instance or aws cloud9.
+        
+        Make sure backend and frontened images available inside ECR repo or artifactorty of your choice. After that before deploying both the images make sure MongoDB available in place.
 
     - Buid Docker images :
 
@@ -298,3 +303,4 @@ Software architecture is trade-off. This architecture or system design for softw
     5. All certifacte should be managed using ACM
     6. Jenkins will be used with Left Shift aprroach to build docker and helm as artifacts.
     7. Automated Jenkis pipeline will be in place to provision infratsructure and deploy the application code.
+    8. We can replace the database with Managed database as per the requirement where less operation cost is requires.
